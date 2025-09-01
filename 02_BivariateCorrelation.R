@@ -116,8 +116,9 @@ uav_tls_significant <- sum(uav_tls_matrix) / sum(!is.na(uav_tls_cor$P))
 uav_field_significant <- sum(uav_field_matrix) / sum(!is.na(uav_field_cor$P))
 tls_field_significant <- sum(tls_field_matrix) / sum(!is.na(tls_field_cor$P))
 
-# Print the result
+# Print the result 
 print(paste("Proportion of significant correlations between UAV and TLS: ", uav_tls_significant))
 print(paste("Proportion of significant correlations between UAV and Field: ", uav_field_significant))
 print(paste("Proportion of significant correlations between TLS and Field: ", tls_field_significant))
+
 

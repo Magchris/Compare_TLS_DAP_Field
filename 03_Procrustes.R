@@ -1,4 +1,4 @@
-# load the required packages
+# load the required packages  
 library(ggplot2)
 library(vegan)
 library(FactoMineR)

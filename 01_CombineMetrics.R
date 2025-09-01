@@ -36,3 +36,4 @@ allmetrics <- merge(allmetrics, tlsmet, by.x = "plot_id", by.y = "plot")
 
 ## Export dataframe
 write.csv(allmetrics, paste0(dir, "/data/Allmetrics.csv"))
+

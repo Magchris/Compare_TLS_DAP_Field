@@ -10,7 +10,7 @@ library(party)
 library(tidyr)
 
 # create path to base directory 
-dir <- getwd()
+dir <- getwd() 
 
 ## import dataset 
 df.all <- read.csv(paste0(dir, "/data/Allmetrics.csv")) |>

@@ -4,7 +4,7 @@
 library(FactoMineR)
 library(factoextra)
 library(dplyr)
-library(ggplot2)
+library(ggplot2) 
 library(MetBrewer)
 
 ##############################################################################
