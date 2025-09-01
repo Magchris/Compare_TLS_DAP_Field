@@ -1,4 +1,8 @@
-#### Title: Random Forest Classification 
+##---------------------------------------------------------------------------------------------------------------------
+## Random Forest Classification
+## Title: Code Script for assessing the compatibility of Single-Scan Terrestrial LiDAR with Digital Aerial Photogrammetry and Field Inventory"
+## Author: Magnus Onyiriagwu | Supervised by: Clara Zemp
+##---------------------------------------------------------------------------------------------------------------------
 
 ## Call the required libraries
 library(party)
@@ -9,7 +13,7 @@ library(cowplot)
 library(party)
 library(tidyr)
 
-# create path to base directory 
+## create path to base directory 
 dir <- getwd() 
 
 ## import dataset 
@@ -20,7 +24,7 @@ df.all <- read.csv(paste0(dir, "/data/Allmetrics.csv")) |>
   dplyr::select(!c("X", "plot_id", "scan_id", "zskew", "zkurt")) |>
   mutate_if(is.character, factor)
 
-## For uav
+## For DAP
 df.uav <- df.all |> dplyr::select(all_of(c("zsd", "zq75", "zq50", "zq25", "zmean", "zmax", "zentropy", 
                                            "rumple", "LAI", "gapFrac", "FHD", "CR", "LandUse")))
 
@@ -38,7 +42,7 @@ imp <-  varimp(cforest(LandUse ~., data=df.all, control = cforest_unbiased(ntree
 df.imp <- data.frame(imp)
 df.imp$varnames <- rownames(df.imp)  
 rownames(df.imp) <- NULL
-names(df.imp)[1] <- 'IncMSE'
+names(df.imp)[1] <- 'IncMSE' 
 
 # Assign names to the different variable sources
 df.imp$varclass <- ifelse(grepl("zsd|zq75|zq50|zq25|zmean|zmax|zentropy|rumple|LAI|gapFrac|FHD|CR", df.imp$varnames), "DAP", 
@@ -73,7 +77,7 @@ df.imptls$strclass <- ifelse(grepl("zsd|zq50|zq25|zmean|zentropy|ENL|sdH|meanH|F
 
 
 ####################################################################
-## UAV Classification
+## DAP Classification
 set.seed(440875)
 imp.uav <-  varimp(cforest(LandUse ~., data=df.uav, control = cforest_unbiased(ntree = 50)), 
                    conditional = TRUE)
@@ -172,7 +176,7 @@ df.impfield$strclass <- ifelse(grepl("zsd|zq50|zq25|zmean|zentropy|ENL|sdH|meanH
     guides(color = guide_legend(override.aes = list(size = 4))))  # Adjust legend key size)
 
 
-## Field
+## Field Plotting
 (pfield <- ggdotchart(df.impfield, x = "varnames", y = "IncMSE",
                     color = "strclass",
                     palette = rev(met.brewer("Nattier", length(unique(df.imp$strclass)))), 
@@ -249,7 +253,6 @@ prod.acc <- sapply(rf.tab, function(i){
   prod = diag(i / rowSums(i))
 })
 
-
 ## User accuracy
 user.acc <- sapply(rf.tab, function(i){
   prod = diag(i / colSums(i))
@@ -261,7 +264,7 @@ overall.acc <- sapply(rf.tab, function(i) {
 })
 
 
-# Define your data
+## Define your data
 Acc.tab <- data.frame(
   Method = c("ALL", "TLS", "DAP", "Field"),
   Producer_Agroforest = prod.acc[1,],
@@ -272,7 +275,7 @@ Acc.tab <- data.frame(
   OOB_Error_Rate = rf.oob
 )
 
-# Transform to long format
+## Transform to long format
 Acc.long <- Acc.tab %>%
   pivot_longer(
     cols = -Method,
@@ -308,13 +311,7 @@ acc.long <- Acc.long |>
     legend.position = "right") 
 )
 
-
-# Export plot 
-require(cowplot)
+## Export plot 
 plt <- plot_grid(acc.plot)
 save_plot(paste0(dir, "/output/images/acc.plot.png"), acc.plot)
-
-
-
-
 

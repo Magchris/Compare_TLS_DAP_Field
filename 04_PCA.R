@@ -1,13 +1,16 @@
-####### principal component analysis 
+##---------------------------------------------------------------------------------------------------------------------
+## Principal Component Analysis
+## Title: Code Script for assessing the compatibility of Single-Scan Terrestrial LiDAR with Digital Aerial Photogrammetry and Field Inventory"
+## Author: Magnus Onyiriagwu Supervised by: Clara Zemp
+##---------------------------------------------------------------------------------------------------------------------
 
-# load libraries 
+## load libraries 
 library(FactoMineR)
 library(factoextra)
 library(dplyr)
 library(ggplot2) 
 library(MetBrewer)
 
-##############################################################################
 # create file path to base directory 
 dir <- getwd()
 
@@ -19,7 +22,7 @@ df.all <- read.csv(paste0(dir, "/data/Allmetrics.csv")) |>
   dplyr::select(!c("X", "plot_id", "scan_id", "zskew", "zkurt")) |>
   mutate_if(is.integer, as.numeric)
 
-## For uav
+## For DAP
 df.uav <- df.all |> dplyr::select(all_of(c("zsd", "zq75", "zq50", "zq25", "zmean", "zmax", "zentropy", 
                          "rumple", "LAI", "gapFrac", "FHD", "CR", "LandUse")))
 
@@ -196,7 +199,7 @@ fviz_eig(field.pca, addlabels=T,
 
 
 #####################################################
-# Merge plots into a single plot 
+## Merge plots into a single plot 
 (fig2 <- plot_grid(tlsBiplot, uavBiplot, fieldBiplot, 
                    ncol = 3, labels = c("B", "C", "D"), label_size = 8))
 (figall <- plot_grid(fig1, fig2,  

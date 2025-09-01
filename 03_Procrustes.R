@@ -1,3 +1,9 @@
+##---------------------------------------------------------------------------------------------------------------------
+## Procrustes Analysis
+## Title: Code Script for assessing the compatibility of Single-Scan Terrestrial LiDAR with Digital Aerial Photogrammetry and Field Inventory"
+## Author: Magnus Onyiriagwu Supervised by: Clara Zemp
+##---------------------------------------------------------------------------------------------------------------------
+
 # load the required packages  
 library(ggplot2)
 library(vegan)

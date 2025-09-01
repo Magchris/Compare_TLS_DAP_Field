@@ -1,10 +1,16 @@
+##---------------------------------------------------------------------------------------------------------------------
+## Bivariate Correlation
+## Title: Code Script for assessing the compatibility of Single-Scan Terrestrial LiDAR with Digital Aerial Photogrammetry and Field Inventory"
+## Author: Magnus Onyiriagwu Supervised by: Clara Zemp
+##---------------------------------------------------------------------------------------------------------------------
+
 # Load the required libraries
 require(ggplot2)
 require(dplyr)
 library(cowplot)
 library(MetBrewer)
 
-## create path to directory. Set working directory to the root folder containing the codes
+## create path to directory. 
 dir <- getwd()
 
 ## import dataset 
@@ -17,7 +23,7 @@ df.all <- read.csv(paste0(dir, "/data/Allmetrics.csv")) |>
 
 ##################################################################
 
-# Initialize empty dataframe to store correlation values and p-values
+## Initialize empty dataframe to store correlation values and p-values
 cor_results <- data.frame(Var1 = character(),
                           Var2 = character(),
                           Correlation = numeric(),
@@ -73,15 +79,15 @@ col <- met.brewer("VanGogh3", 3)
           legend.text = element_text(size = 6), 
           legend.title = element_text(size = 6, face = "bold"), 
           legend.key.size = unit(0.4, "cm")) +
-    geom_vline(xintercept = 5.5, colour = "black", lty = 2, lwd = 0.4)) 
+    geom_vline(xintercept = 6.5, colour = "black", lty = 2, lwd = 0.4)) 
 
 ## save correlation heatmap
-save_plot(corplot, filename = paste0(dir, "/scripts/output/images/corplot.pdf"), dpi = 600)
+save_plot(corplot, filename = paste0(dir, "/data/output/corplot.png"), dpi = 600)
 
 
 ##################################################################
 # Estimate the proportion of correlating pairs 
-require(Hmisc)
+library(Hmisc)
 
 # Subset the variables into three groups
 uav_vars <- c("zsd", "zq75", "zq50", "zq25", "zmean", "zmax", "zentropy", 
@@ -100,7 +106,6 @@ uav_field_cor <- rcorr(as.matrix(cbind(uav_data, field_data)), type = "spearman"
 tls_field_cor <- rcorr(as.matrix(cbind(tls_data, field_data)), type = "spearman")
 
 
-#############
 # Identify significant correlations (p-value < 0.05)
 uav_tls_matrix <- uav_tls_cor$P < 0.05
 uav_field_matrix <- uav_field_cor$P < 0.05
@@ -116,9 +121,8 @@ uav_tls_significant <- sum(uav_tls_matrix) / sum(!is.na(uav_tls_cor$P))
 uav_field_significant <- sum(uav_field_matrix) / sum(!is.na(uav_field_cor$P))
 tls_field_significant <- sum(tls_field_matrix) / sum(!is.na(tls_field_cor$P))
 
-# Print the result 
+# Print the result
 print(paste("Proportion of significant correlations between UAV and TLS: ", uav_tls_significant))
 print(paste("Proportion of significant correlations between UAV and Field: ", uav_field_significant))
 print(paste("Proportion of significant correlations between TLS and Field: ", tls_field_significant))
-
 
