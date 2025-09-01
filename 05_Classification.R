@@ -5,13 +5,13 @@
 ##---------------------------------------------------------------------------------------------------------------------
 
 ## Call the required libraries
-library(party)
 library(dplyr)
 library(MetBrewer)
-library(ggpubr)
 library(cowplot)
 library(party)
+library(ggpubr)
 library(tidyr)
+
 
 ## create path to base directory 
 dir <- getwd() 
@@ -35,7 +35,7 @@ df.tls <- df.all |> dplyr::select(all_of(c("SSCI", "MeanFrac", "ENL", "UCI", "ca
 df.field <- df.all |> dplyr::select(all_of(c("maxH", "sdDBH", "nStems", "BA", "sdH", "meanH", "meanDBH", "sdBA", "LandUse")))
 
 #########################################################################
-#------------- variable importance ranking using conditional permutation
+## variable importance ranking using conditional permutation
 set.seed(440875)
 imp <-  varimp(cforest(LandUse ~., data=df.all, control = cforest_unbiased(ntree = 50)), 
                conditional = TRUE)
@@ -44,7 +44,7 @@ df.imp$varnames <- rownames(df.imp)
 rownames(df.imp) <- NULL
 names(df.imp)[1] <- 'IncMSE' 
 
-# Assign names to the different variable sources
+## Assign names to the different variable sources
 df.imp$varclass <- ifelse(grepl("zsd|zq75|zq50|zq25|zmean|zmax|zentropy|rumple|LAI|gapFrac|FHD|CR", df.imp$varnames), "DAP", 
                           ifelse(grepl("SSCI|ENL|MeanFrac|can.open|TopH|UCI", df.imp$varnames), "TLS", 
                                  ifelse(grepl("maxH|sdDBH|nStems|BA|sdBA|sdH|meanH|meanDBH|meanBA", df.imp$varnames), "Field", " ")))
@@ -163,7 +163,8 @@ df.impfield$strclass <- ifelse(grepl("zsd|zq50|zq25|zmean|zentropy|ENL|sdH|meanH
     geom_hline(yintercept = 0, linetype = 2, color = "lightgray") +
     annotate("text", x = 2.5, y = 0.1, label =  c(expression(bold("OA = 0.89"))), size = 2.5) +
     labs(color = "Str. Class", title = "DAP") + 
-    theme(legend.position = "none",
+    theme(legend.position = "none", 
+          # legend.position = "right", # use instead to extract legend
           legend.key.size = unit(1, units = "cm"),
           legend.spacing = unit(0.1, units = "cm"),
           legend.title = element_text(size = 14, face = "bold"), 
@@ -175,6 +176,8 @@ df.impfield$strclass <- ifelse(grepl("zsd|zq50|zq25|zmean|zentropy|ENL|sdH|meanH
           axis.text.x = element_text(vjust = 1)) +
     guides(color = guide_legend(override.aes = list(size = 4))))  # Adjust legend key size)
 
+## Extract the legend
+(pSCleg <- get_legend(puav)) # legend on puav should be set to right before executing
 
 ## Field Plotting
 (pfield <- ggdotchart(df.impfield, x = "varnames", y = "IncMSE",
@@ -206,21 +209,17 @@ df.impfield$strclass <- ifelse(grepl("zsd|zq50|zq25|zmean|zentropy|ENL|sdH|meanH
     guides(color = guide_legend(override.aes = list(size = 4))))  # Adjust legend key size)
 
 
-## Extract the legend
-(pSCleg <- get_legend(puav))
-
 ## Merge the panels
 (pc <- plot_grid(ptls, pfield, nrow = 2, labels = c("B", "C"), label_size = 8))
 (pcomb <- plot_grid(puav, pc, ncol = 2, labels = c("A", " "), label_size = 8))
+(p_leg <- plot_grid(pSCleg))
 
 ## Export graph as image
 save_plot(pcomb, filename = paste0(dir, "/data/output/RFvarimp.png"),
           base_height = 4, base_width = 4, dpi = 600)
-save_plot(pcomb, filename = paste0(dir, "/data/output/RFvarimp.pdf"),
-          base_height = 4, base_width = 4, dpi = 600)
-
 ## Export legend
-save_plot(pSCleg, filename = paste0(dir, "/data/output/RFvarimp_legend.png"))
+save_plot(p_leg, filename = paste0(dir, "/data/output/RF_legend.png"),
+          base_height = 2, base_width = 2, dpi = 600)
 
 ###############################################################################
 ## Plot Accuracy Parameters
