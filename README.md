@@ -14,6 +14,7 @@ Description of metrics and (data sources)
 * LandUse: Vegetation use classification of the plot
 <br>
 
+
 * CR: Canopy ratio (DAP)
 * zmax (m): Maximum returned tree height within a plot (DAP)
 * zmean (m): Mean estimated tree height within a plot (DAP)
@@ -31,6 +32,7 @@ Description of metrics and (data sources)
 * FHD: Foliage height diversity (DAP)
 <br>
 
+
 * nStems: Number of stems above 5 m dbh per plot (Field)
 * BA (m2/ha): Basal area of all selected individuals per plot scaled to a hectare (Field)
 * sdBA (m2/ha): Standard deviation of plot-level basal area (Field)
@@ -42,13 +44,14 @@ Description of metrics and (data sources)
 * sdDBH (m): Standard deviation of diameter at breast height per plot (Field)
 <br>
 
+
 * TopH (m): Maximum recorded tree height within a plot (TLS)
 * ENL: Effective number of layers (TLS)
 * SSCI: Stand structural complexity index (TLS)
 * can.open (%): percentage total of open canopy area above the scanner within a 60 degree scanning position in the * * azimuthal direction. (TLS)
 * MeanFrac: Mean fractal dimension (TLS)
 * UCI: Understory complexity index (TLS)
-
+<br>
 
 
 ### Script 01_CombineMetrics
