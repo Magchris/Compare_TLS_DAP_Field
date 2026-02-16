@@ -12,7 +12,7 @@ Description of metrics and (data sources)
 * plot_id: Assigned plot identification number
 * scan_id: unique ID number of the scans per plot
 * LandUse: Vegetation use classification of the plot
-<br>
+
 * CR: Canopy ratio (DAP)
 * zmax (m): Maximum returned tree height within a plot (DAP)
 * zmean (m): Mean estimated tree height within a plot (DAP)
