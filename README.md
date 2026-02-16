@@ -12,7 +12,7 @@ Description of metrics and (data sources)
 * plot_id: Assigned plot identification number
 * scan_id: unique ID number of the scans per plot
 * LandUse: Vegetation use classification of the plot
-
+<br>
 
 * CR: Canopy ratio (DAP)
 * zmax (m): Maximum returned tree height within a plot (DAP)
@@ -29,39 +29,41 @@ Description of metrics and (data sources)
 * rumple: Canopy rumple index (DAP)
 * LAI: Leaf area index (DAP)
 * FHD: Foliage height diversity (DAP)
+<br>
 
-nStems: Number of stems above 5 m dbh per plot (Field)
-BA (m2/ha): Basal area of all selected individuals per plot scaled to a hectare (Field)
-sdBA (m2/ha): Standard deviation of plot-level basal area (Field)
-meanBA (m2/ha): Average plot-level basal area (Field)
-sdH (m): Standard deviation of tree heights (Field)
-maxH (m): Maximum tree height (Field)
-mean (m): Mean estimated tree height (Field)
-meanDBH (m): Mean diameter at breast height of all selected trees per plot (Field)
-sdDBH (m): Standard deviation of diameter at breast height per plot (Field)
+* nStems: Number of stems above 5 m dbh per plot (Field)
+* BA (m2/ha): Basal area of all selected individuals per plot scaled to a hectare (Field)
+* sdBA (m2/ha): Standard deviation of plot-level basal area (Field)
+* meanBA (m2/ha): Average plot-level basal area (Field)
+* sdH (m): Standard deviation of tree heights (Field)
+* maxH (m): Maximum tree height (Field)
+* mean (m): Mean estimated tree height (Field)
+* meanDBH (m): Mean diameter at breast height of all selected trees per plot (Field)
+* sdDBH (m): Standard deviation of diameter at breast height per plot (Field)
+<br>
 
-TopH (m): Maximum recorded tree height within a plot (TLS)
-ENL: Effective number of layers (TLS)
-SSCI: Stand structural complexity index (TLS)
-can.open (%): percentage total of open canopy area above the scanner within a 60 degree scanning position in the azimuthal direction. (TLS)
-MeanFrac: Mean fractal dimension (TLS)
-UCI: Understory complexity index (TLS)
+* TopH (m): Maximum recorded tree height within a plot (TLS)
+* ENL: Effective number of layers (TLS)
+* SSCI: Stand structural complexity index (TLS)
+* can.open (%): percentage total of open canopy area above the scanner within a 60 degree scanning position in the * * azimuthal direction. (TLS)
+* MeanFrac: Mean fractal dimension (TLS)
+* UCI: Understory complexity index (TLS)
 
 
 
-## Script 01_CombineMetrics
+### Script 01_CombineMetrics
 The derived metrics from the single-scan TLS, DTM-independent DAP, and field inventory are merged into a data table. 
 
-## Script 02_BivariateCorrelation
+### Script 02_BivariateCorrelation
 Computes the Spearman correlation of all pairs of the three datasets and generates a correlation heatmap. The percentage of significant correlations was extracted from the correlation matrix
 
-## Script 03_Procrustes
+### Script 03_Procrustes
 Computes Procrustes correlation for the sets of analogous and equivalent metrics between the DAP-TLS, DAP-Field, and TLS-Field structural variables. Each data source was grouped into four structural aspects and compared with similar aspects from the other two data sources. 
 
-## Script 04_PCA
+### Script 04_PCA
 Extrapolates the principal component and variable loading of all the structural variables
 
-## Scrip 05_Classification
+### Scrip 05_Classification
 Performs random forest classification on the combined set of variables. 
 
 
