@@ -1,7 +1,13 @@
 
 # Title: "Compatibility of Single-Scan Terrestrial LiDAR with Digital Aerial Photogrammetry and Field Inventory"
+
+
 Authors: "Onyiriagwu et al., 2025"
+
+
 DOI: 10.1002/rse2.70047
+
+
 Datasheet: [10.5281/zenodo.17038271](https://doi.org/10.5281/zenodo.17038271)
 
 The dataset contains the scripts and the datasheet (see the Zenodo link) used for the comparative analysis of vegetation structural characteristics of Terrestrial laser scanning (TLS), UAV-based digital aerial photogrammetry (DAP), and ground-based field inventory (Field) in tropical landscapes. The study was conducted in the Afromontane ecoregion of southwestern Kenya in a transition area bordering the Nyangores forest and the human-settled agroforestry landscapes. 
